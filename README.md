@@ -436,9 +436,3 @@ Anmol Bisht
 Pratishtha Goyal
 Akshat Kumar
 Janhavi Negi
-
----
-
-# License
-
-MIT License
