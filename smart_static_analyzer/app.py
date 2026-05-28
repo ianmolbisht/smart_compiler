@@ -1,7 +1,7 @@
 """
 Flask Web Server — Static Code Analyzer.
 """
-
+from optimizer.optimizer import Optimizer
 from collections import deque, Counter
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
@@ -89,14 +89,33 @@ def analyze():
         quality = compute_quality(sem_result.issues)
         sem_dict = sem_result.to_dict()
         sem_dict["quality"] = quality
+        
+        # OPTIMIZATION ENGINE
+# -----------------------------------
+
+        optimizer = Optimizer()
+
+        optimized_ast = optimizer.optimize(ast_root)
+
+        optimization_results = optimizer.optimizations
 
         result.update({
             "tokens": tokens_to_list(tokens),
+
             "ast": ast_to_dict(ast_root),
+
+            "optimized_ast": ast_to_dict(optimized_ast),
+
+            "optimizations": optimization_results,
+
             "gcc": gcc_res.to_dict(),
+
             "pycparser": pyc_res.to_dict(),
+
             "metrics": metrics,
+
             "semantic": sem_dict,
+
             "errors": [],
         })
 

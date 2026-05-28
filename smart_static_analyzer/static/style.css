@@ -75,7 +75,23 @@ a {
 a:hover {
   text-decoration: underline;
 }
+.optimization-container {
+    padding: 1rem;
+}
 
+.optimization-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 5px solid #22c55e;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.optimization-card h4 {
+    color: #16a34a;
+    margin-bottom: 0.5rem;
+}
 button {
   cursor: pointer;
   font-family: var(--font);

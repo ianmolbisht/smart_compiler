@@ -219,6 +219,8 @@
           <button class="tab" data-tab="pycparser">pycparser</button>
           <button class="tab" data-tab="metrics">Metrics</button>
           <button class="tab" data-tab="semantic">Semantic <span class="tab-badge" id="sem-tab-badge">0</span></button>
+          <button class="tab" data-tab="optimizer">Optimizer</button>
+</button>
         </div>
       </div>
 
@@ -286,6 +288,9 @@
           </div>
         </div>
 
+
+
+
         <!-- pycparser -->
         <div class="tab-pane hidden" id="tab-pycparser">
           <div id="pyc-content">
@@ -312,7 +317,18 @@
             </div>
           </div>
         </div>
+        <!-- Optimizer -->
+<div class="tab-pane hidden" id="tab-optimizer">
 
+  <div class="optimization-container">
+
+    <h3>Optimization Suggestions</h3>
+
+    <div id="optimization-list"></div>
+
+  </div>
+
+</div>
       </div><!-- /tab-content -->
     </div><!-- /output-panel -->
 
@@ -505,6 +521,7 @@ int main() {
         case "pycparser": renderPycparser(); break;
         case "metrics": renderMetrics(); break;
         case "semantic": renderSemantic(); break;
+        case "optimizer":renderOptimizer();break;
       }
     }
 
@@ -1053,7 +1070,50 @@ int main() {
     </div>` : ""}
   </div>`;
     }
+    function renderOptimizer() {
 
+    const container = document.getElementById("optimization-list");
+
+    if (!lastResult || !lastResult.optimizations) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⚡</div>
+                <span>No optimization data</span>
+            </div>
+        `;
+
+        return;
+    }
+
+    const optimizations = lastResult.optimizations;
+
+    if (!optimizations.length) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">✅</div>
+                <span>No optimizations needed</span>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = optimizations.map(opt => `
+
+        <div class="optimization-card">
+
+            <h4>${opt.type}</h4>
+
+            <p><strong>Before:</strong> ${opt.before}</p>
+
+            <p><strong>After:</strong> ${opt.after}</p>
+
+        </div>
+
+    `).join("");
+}
     /* ─── Semantic Analysis ──────────────────────────────── */
     let _semFilter = "all";
 
